@@ -1,13 +1,103 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 15px;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.navlogo{
+  font-weight: 600;
+}
+
+.feature{
+  justify-content: center;
+  display: flex;
+  margin-top: 30px;
+}
+
+.feature h2{
+  border-bottom: 1px solid rgb(71, 71, 71);
+}
+
+.custom-form{
+  border-radius: 8px;
+}
+
+.navitems{
+  display: flex;
+  justify-content: right;
+  padding: 10px;
+}
+.headercard{
+  font-weight: 600;
+}
+
+.carousel{
+  position: relative;
+}
+
+.blackbox {
+ position: absolute;
+  z-index: 3; /* gray box will be above both green and black box */
+  left: 44%;
+  top: 135px;
+}
+
+input{
+  border: none;
+  width: 140px;
+}
+
+input:focus{
+  outline: none;
+}
+
+.applycard{
+  position: relative;
+}
+
+.cardbtn {
+ position: absolute;
+  z-index: 3; /* gray box will be above both green and black box */
+  left: 0%;
+  top: 0px;
+  width: 100%;
+}
+.cardimg{
+  height:230px ;
+}
+
+.seperator {
+  width: 100%;
+}
+
+.controls-wrapper {
+  width: 100%;
+}
+
+.carousel-wrapper {
+  width: 100%;
+}
+
+.rec-carousel-item:focus {
+  outline: none;
+  box-shadow: inset 0 0 1px 0px violet;
+}
+
+
+@media only screen and (max-width: 600px) {
+  .blackbox {
+  position: absolute;
+  z-index: 3; /* gray box will be above both green and black box */
+  left: 33%;
+  top: 180px;
+}
+}
+
+
