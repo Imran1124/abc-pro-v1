@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { State, City } from 'country-state-city';
+import { getState, getCity } from '../../utils/Region';
 import { dispatch } from '../app/store';
 
 const initialState = {
@@ -45,26 +45,28 @@ export default regionSlicer.reducer;
 
 export const { isPending, cisState, cisCity, pisCity, pisState, isRejected } = regionSlicer.actions;
 
-export const cStateAction = async () => {
+export const cStateAction = () => {
     dispatch(isPending());
     try {
-        const stateSort = AllSorts(State.getAllStates())
+        const stateSort = AllSorts(getState)
         const res = stateSort.filter(s => {
             return s.countryCode === 'IN' && s.isoCode === 'JH'
         });
+        console.log(res)
         dispatch(cisState(res))
     } catch (error) {
         dispatch(isRejected(error.message));
     }
 }
 
-export const cCityAction = async (statecode) => {
+export const cCityAction = (statecode) => {
     dispatch(isPending());
     try {
-        const citySort = await AllSorts(City.getAllCities())
+        const citySort = AllSorts(getCity)
         const res = citySort.filter(city => {
             return city.stateCode === statecode
         });
+        console.log(res)
         dispatch(cisCity(res))
     } catch (error) {
         dispatch(isRejected(error.message));
@@ -72,10 +74,10 @@ export const cCityAction = async (statecode) => {
 }
 
 
-export const pStateAction = async () => {
+export const pStateAction = () => {
     dispatch(isPending());
     try {
-        const stateSort = AllSorts(State.getAllStates())
+        const stateSort = AllSorts(getState)
         const res = stateSort.filter(s => {
             return s.countryCode === 'IN' && s.isoCode === 'JH'
         });
@@ -85,10 +87,10 @@ export const pStateAction = async () => {
     }
 }
 
-export const pCityAction = async (statecode) => {
+export const pCityAction = (statecode) => {
     dispatch(isPending());
     try {
-        const citySort = await AllSorts(City.getAllCities())
+        const citySort = AllSorts(getCity)
         const res = citySort.filter(city => {
             return city.stateCode === statecode
         });

@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './redux/app/store';
 import './index.css';
+import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import { BrowserRouter } from 'react-router-dom';
 import Loader from './Components/Loader';
 import App from './App';

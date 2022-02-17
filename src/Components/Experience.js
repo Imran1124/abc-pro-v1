@@ -46,7 +46,8 @@ const Experience = (props) => {
                                 name="fromdate"
                                 label='From Date'
                                 id='mobileno'
-                                type='date' />
+                                type='date'
+                                onChange={handleRadioChange} />
                         </div>
                         <div className="col-md-3 col-sm-12 my-2">
                             <MDBInput
@@ -54,7 +55,8 @@ const Experience = (props) => {
                                 name="todate"
                                 label='To Date'
                                 id='todate'
-                                type='date' />
+                                type='date'
+                                onChange={handleRadioChange} />
                         </div>
                         <div className="col-md-3 col-sm-12 my-2">
                             <MDBInput
@@ -62,7 +64,8 @@ const Experience = (props) => {
                                 name="position"
                                 label='Position/Designation'
                                 id='position'
-                                type='txet' />
+                                type='txet'
+                                onChange={handleRadioChange} />
                         </div>
                         <div className="col-md-3 col-sm-12 my-2">
                             <MDBInput
@@ -70,7 +73,8 @@ const Experience = (props) => {
                                 name="company"
                                 label='Company/Organisation'
                                 id='comapny'
-                                type='text' />
+                                type='text'
+                                onChange={handleRadioChange} />
                         </div>
                     </div> : null}
 

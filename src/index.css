@@ -49,15 +49,6 @@ code {
   top: 135px;
 }
 
-input{
-  border: none;
-  width: 140px;
-}
-
-input:focus{
-  outline: none;
-}
-
 .applycard{
   position: relative;
 }
@@ -89,7 +80,6 @@ input:focus{
   outline: none;
   box-shadow: inset 0 0 1px 0px violet;
 }
-
 
 @media only screen and (max-width: 600px) {
   .blackbox {

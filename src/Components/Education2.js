@@ -4,19 +4,19 @@ import { MDBInput, MDBBtn, MDBIcon } from 'mdb-react-ui-kit';
 const Education1 = (props) => {
 
     const handleChange = (index, e) => {
-        const values = [...props.addField];
+        const values = [...props.field.education];
         values[index][e.target.name] = e.target.value;
-        props.setAddField(values);
+        props.setField({ ...props.field, education: values });
     }
 
     const adddata = (e) => {
-        props.setAddField([...props.addField, {}])
+        props.setField({ ...props.field, education: [...props.field.education, {}] })
     }
 
     const handleRemove = (index) => {
-        const values = [...props.addField];
+        const values = [...props.field.education];
         values.splice(index, 1);
-        props.setAddField(values);
+        props.setField({ ...props.field, education: values });
     }
 
     return (
@@ -24,8 +24,8 @@ const Education1 = (props) => {
             <div className="container my-5">
                 <div style={{ justifyContent: 'space-between', display: 'flex' }}>
                     <span style={{ fontWeight: 'bold' }}>Education</span>
-                    <MDBBtn className='btn-rounded' outline onClick={adddata}
-                        hidden={props.addField.length ? true : false}
+                    <MDBBtn type="button" className='btn-rounded' outline onClick={adddata}
+                        hidden={props.field.education.length ? true : false}
                     >
                         <MDBIcon icon='plus' fas /> Education
                     </MDBBtn>
@@ -33,8 +33,8 @@ const Education1 = (props) => {
                 <hr />
                 <div className="row">
                     <div className="col-md-12">
-                        {props.addField.map((event, index) => (
-                            <div className="row">
+                        {props.field.education.map((event, index) => (
+                            <div className="row" key={index}>
                                 <div className="col-md-2 col-12 my-2">
                                     <MDBInput
                                         size='lg'
@@ -43,10 +43,10 @@ const Education1 = (props) => {
                                                 index === 1 ? 'Intermediate' :
                                                     index === 2 ? 'Graduation' :
                                                         index === 3 ? 'Post Graduation' : 'Tecnical'}
-                                        id='teducation'
+                                        id='education'
                                         type='text'
-                                        name="teducation"
-                                        value={event.teducation}
+                                        name="education"
+                                        value={event.education || ''}
                                         onChange={e => handleChange(index, e)}
                                     />
                                 </div>
@@ -54,44 +54,45 @@ const Education1 = (props) => {
                                     <MDBInput
                                         size='lg'
                                         label='Board'
-                                        id='tboard'
+                                        id='board'
                                         type='text'
-                                        name="tboard"
-                                        value={event.tboard}
+                                        name="board"
+                                        value={event.board || ''}
                                         onChange={e => handleChange(index, e)} />
                                 </div>
                                 <div className="col-md-2 col-12 my-2">
                                     <MDBInput
                                         size='lg'
                                         label='Institute'
-                                        id='tinstiture'
+                                        id='institute'
                                         type='text'
-                                        name="tinstiture"
-                                        value={event.tinstiture}
+                                        name="institute"
+                                        value={event.institute || ''}
                                         onChange={e => handleChange(index, e)} />
                                 </div>
                                 <div className="col-md-2 col-12 my-2">
                                     <MDBInput
                                         size='lg'
                                         label='Percentage'
-                                        id='tpercentage'
+                                        id='percentage'
                                         type='text'
-                                        name="tpercentage"
-                                        value={event.tpercentage}
+                                        name="percentage"
+                                        value={event.percentage || ''}
                                         onChange={e => handleChange(index, e)} />
                                 </div>
                                 <div className="col-md-3 col-9 my-2">
                                     <MDBInput
                                         size='lg'
                                         label='Year'
-                                        id='tyear'
+                                        id='year'
                                         type='text'
-                                        name="tyear"
-                                        value={event.tyear}
+                                        name="year"
+                                        value={event.year || ''}
                                         onChange={e => handleChange(index, e)} />
                                 </div>
                                 <div className="col-md-1 col-3 my-2">
-                                    <MDBBtn color='danger' className='btn btn-block' size='lg' outline onClick={handleRemove}>
+                                    <MDBBtn type="button" color='danger' className='btn btn-block' size='lg' outline
+                                        onClick={() => handleRemove(index)}>
                                         <MDBIcon icon='trash' fas />
                                     </MDBBtn>
                                 </div>
@@ -100,8 +101,8 @@ const Education1 = (props) => {
                         ))}
                     </div>
                     <div style={{ justifyContent: 'right', display: 'flex' }}
-                        hidden={!props.addField.length ? true : false}>
-                        <MDBBtn outline onClick={adddata}>
+                        hidden={!props.field.education.length ? true : false}>
+                        <MDBBtn type="button" outline onClick={adddata}>
                             <MDBIcon icon='plus' fas />
                         </MDBBtn>
                     </div>

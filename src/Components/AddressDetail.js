@@ -13,44 +13,58 @@ const AddressDetail = (props) => {
         pStateAction();
     }, [])
     const changeCity = (e) => {
-        props.setField({ ...props.field, cstate: e.target.value })
+        props.setField({ ...props.field, caddress: { ...props.field.caddress, cstate: e.target.value } })
         cCityAction(e.target.value);
     }
 
     const pchangeCity = (e) => {
-        props.setField({ ...props.field, pstate: e.target.value })
+        // props.setField({ ...props.field, pstate: e.target.value })
+        props.setField({ ...props.field, paddress: { ...props.field.paddress, pstate: e.target.value } })
         pCityAction(e.target.value);
     }
 
     const handleCheck = (e) => {
-        pCityAction(props.field.cstate)
+        pCityAction(props.field.caddress.cstate)
         if (checked === true) {
             setChecked(false)
             props.setField({
-                ...props.field,
-                pstate: '',
-                pcity: '',
-                phouse_door_flate: '',
-                pstreet_locality_policestation: '',
-                plocation_landmark: '',
-                p_pincode: ''
+                ...props.field, paddress: {
+                    ...props.field.paddress,
+                    pstate: '',
+                    pcity: '',
+                    phouse_door_flate: '',
+                    pstreet_locality_policestation: '',
+                    plocation_landmark: '',
+                    p_pincode: ''
+                }
             })
         } else {
             setChecked(true)
             props.setField({
-                ...props.field,
-                pstate: props.field.cstate,
-                pcity: props.field.ccity,
-                phouse_door_flate: props.field.chouse_door_flate,
-                pstreet_locality_policestation: props.field.cstreet_locality_policestation,
-                plocation_landmark: props.field.clocation_landmark,
-                p_pincode: props.field.cpincode
+                ...props.field, paddress: {
+                    ...props.field.paddress,
+                    pstate: props.field.caddress.cstate,
+                    pcity: props.field.caddress.ccity,
+                    phouse_door_flate: props.field.caddress.chouse_door_flate,
+                    pstreet_locality_policestation: props.field.caddress.cstreet_locality_policestation,
+                    plocation_landmark: props.field.caddress.clocation_landmark,
+                    p_pincode: props.field.caddress.cpincode
+                }
             })
         }
     }
 
-    const handleChange = (e) => {
-        props.setField({ ...props.field, [e.target.name]: e.target.value })
+    const handleChangeCaddress = (e) => {
+        props.setField({
+            ...props.field,
+            caddress: { ...props.field.caddress, [e.target.name]: e.target.value }
+        })
+    }
+    const handleChangePaddress = (e) => {
+        props.setField({
+            ...props.field,
+            paddress: { ...props.field.paddress, [e.target.name]: e.target.value },
+        })
     }
 
     return (
@@ -64,8 +78,10 @@ const AddressDetail = (props) => {
                         <hr />
                         <div className="row">
                             <div className="col-md-6 my-2">
-                                <select name="cstate" className='form-select form-select-lg'
-                                    onChange={changeCity} required >
+                                <select name="cstate"
+                                    className='form-select form-select-lg'
+                                    ref={props.refs.refCstate}
+                                    onChange={changeCity} >
                                     <option value="">Select State</option>
                                     {cstates.map((e, i) => (
                                         <option key={i} value={e.isoCode}>{e.name}</option>
@@ -74,9 +90,14 @@ const AddressDetail = (props) => {
                             </div>
                             <div className="col-md-6 my-2">
                                 <select
+                                    ref={props.refs.refCcity}
                                     className='form-select form-select-lg'
                                     name="ccity"
-                                    onChange={(e) => props.setField({ ...props.field, ccity: e.target.value })}
+                                    onChange={(e) => props.setField({
+                                        ...props.field,
+                                        caddress: { ...props.field.caddress, ccity: e.target.value }
+                                    }
+                                    )}
                                 >
                                     <option value="">Select City</option>
                                     {ccity.map((e, i) => (
@@ -90,24 +111,22 @@ const AddressDetail = (props) => {
                         <div className="row">
                             <div className="col-md-6 my-2">
                                 <MDBInput
-                                    className='custom-form'
-                                    label='House/Door/FlateNo'
-                                    id='chouse_door_flate'
+                                    inputRef={props.refs.refChouse}
                                     type='text'
                                     name="chouse_door_flate"
-                                    value={props.field.chouse_door_flate || ''}
-                                    onChange={handleChange}
+                                    value={props.field.caddress.chouse_door_flate || ''}
+                                    onChange={handleChangeCaddress}
+                                    label="House/Door/Flate"
                                     size='lg' />
                             </div>
                             <div className="col-md-6 my-2">
                                 <MDBInput
-                                    className='custom-form'
-                                    label='Street/Locality/Police Station'
-                                    id='cstreet_locality_policestation'
+                                    inputRef={props.refs.refCstreet}
                                     type='text'
                                     name="cstreet_locality_policestation"
-                                    value={props.field.cstreet_locality_policestation || ''}
-                                    onChange={handleChange}
+                                    value={props.field.caddress.cstreet_locality_policestation || ''}
+                                    onChange={handleChangeCaddress}
+                                    label="Street/Location/Police station"
                                     size='lg' />
                             </div>
                         </div>
@@ -115,27 +134,29 @@ const AddressDetail = (props) => {
                         <hr />
                         <div className="row">
                             <div className="col-md-6 my-2">
+
                                 <MDBInput
-                                    className='custom-form'
-                                    label='Location/Land Mark *'
-                                    id='clocation_landmark'
+                                    inputRef={props.refs.refClocation}
                                     type='text'
                                     name="clocation_landmark"
-                                    value={props.field.clocation_landmark || ''}
-                                    onChange={handleChange}
-                                    size='lg' />
+                                    value={props.field.caddress.clocation_landmark || ''}
+                                    onChange={handleChangeCaddress}
+                                    label="Location/Landmark"
+                                    size='lg'
+                                />
 
                             </div>
                             <div className="col-md-6 my-2">
+
                                 <MDBInput
-                                    className='custom-form'
-                                    label='Pincode'
-                                    id='cpincode'
+                                    inputRef={props.refs.refCpincode}
                                     type='text'
                                     name="cpincode"
-                                    value={props.field.cpincode || ''}
-                                    onChange={handleChange}
-                                    size='lg' />
+                                    value={props.field.caddress.cpincode || ''}
+                                    onChange={handleChangeCaddress}
+                                    label='Pincode'
+                                    size='lg'
+                                />
                             </div>
                         </div>
                     </div>
@@ -157,8 +178,10 @@ const AddressDetail = (props) => {
                         <hr />
                         <div className="row">
                             <div className="col-md-6 my-2">
+
                                 <select className='form-select form-select-lg'
-                                    value={props.field.pstate}
+                                    ref={props.refs.refPstate}
+                                    value={props.field.paddress.pstate}
                                     onChange={pchangeCity} >
                                     <option value="">Select State</option>
                                     {pstates.map((e, i) => (
@@ -169,10 +192,14 @@ const AddressDetail = (props) => {
                                 </select>
                             </div>
                             <div className="col-md-6 my-2">
+
                                 <select
-                                    onChange={(e) => props.setField({ ...props.field, pcity: e.target.value })}
+                                    ref={props.refs.refPcity}
+                                    onChange={(e) => props.setField({
+                                        ...props.field, paddress: { ...props.field.paddress, pcity: e.target.value }
+                                    })}
                                     className='form-select form-select-lg'
-                                    value={props.field.pcity}
+                                    value={props.field.paddress.pcity}
                                 >
                                     <option value="DEFAULT">Select City</option>
                                     {pcity.map((e, i) => (
@@ -187,25 +214,26 @@ const AddressDetail = (props) => {
                         <hr />
                         <div className="row">
                             <div className="col-md-6 my-2">
+
                                 <MDBInput
-                                    className='custom-form'
+                                    inputRef={props.refs.refPhouse}
                                     label='House/Door/FlateNo'
                                     id='phouse_door_flate'
                                     type='text'
                                     name="phouse_door_flate"
-                                    value={props.field.phouse_door_flate || ''}
-                                    onChange={handleChange}
+                                    value={props.field.paddress.phouse_door_flate || ''}
+                                    onChange={handleChangePaddress}
                                     size='lg' />
                             </div>
                             <div className="col-md-6 my-2">
+
                                 <MDBInput
-                                    className='custom-form'
-                                    label='Street/Locality/Police Station'
-                                    id='pstreet_locality_policestation'
+                                    inputRef={props.refs.refPstreet}
                                     type='text'
                                     name="pstreet_locality_policestation"
-                                    value={props.field.pstreet_locality_policestation || ''}
-                                    onChange={handleChange}
+                                    value={props.field.paddress.pstreet_locality_policestation || ''}
+                                    onChange={handleChangePaddress}
+                                    label="Street/Locality/Police Station"
                                     size='lg' />
                             </div>
                         </div>
@@ -213,26 +241,26 @@ const AddressDetail = (props) => {
                         <hr />
                         <div className="row">
                             <div className="col-md-6 my-2">
+
                                 <MDBInput
-                                    className='custom-form'
-                                    label='Location/Land Mark'
-                                    id='plocation_landmark'
+                                    inputRef={props.refs.refPlocation}
                                     type='text'
                                     name="plocation_landmark"
-                                    value={props.field.plocation_landmark || ''}
-                                    onChange={handleChange}
+                                    value={props.field.paddress.plocation_landmark || ''}
+                                    onChange={handleChangePaddress}
+                                    label="Location/ Landmark"
                                     size='lg' />
 
                             </div>
                             <div className="col-md-6 my-2">
+
                                 <MDBInput
-                                    className='custom-form'
-                                    label='Pincode'
-                                    id='p_pincode'
+                                    inputRef={props.refs.refPpincode}
                                     type='text'
                                     name="p_pincode"
-                                    value={props.field.p_pincode || ''}
-                                    onChange={handleChange}
+                                    value={props.field.paddress.p_pincode || ''}
+                                    onChange={handleChangePaddress}
+                                    label="Pincode"
                                     size='lg' />
                             </div>
                         </div>
